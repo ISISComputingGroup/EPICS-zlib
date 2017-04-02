@@ -8,7 +8,7 @@ include $(TOP)/configure/CONFIG
 #==================================================
 # build a support library
 
-LIBRARY_IOC += zlib
+LIBRARY_IOC += zlib zlibd
 
 # xxxRecord.h will be created from xxxRecord.dbd
 #DBDINC += xxxRecord
@@ -20,6 +20,10 @@ INC += zlib.h zconf.h
 zlib_SRCS += adler32.c compress.c crc32.c deflate.c gzclose.c gzlib.c gzread.c \
        gzwrite.c infback.c inffast.c inflate.c inftrees.c trees.c uncompr.c zutil.c
 zlib_LDFLAGS_WIN32 += /def:$(TOP)/zlibApp/src/win32/zlib.def
+
+# to help a debug cmake build find zlib
+zlibd_SRCS += $(zlib_SRCS)
+zlibd_LDFLAGS_WIN32 += $(zlib_LDFLAGS_WIN32)
 
 PROD_IOC += zlib_example
 zlib_example_SRCS += example.c
