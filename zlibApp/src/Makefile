@@ -32,7 +32,7 @@ endif
 CMAKE_GENERATOR=Visual Studio $(VS_ARCH)
 endif
 ifneq ($(findstring debug,$(EPICS_HOST_ARCH)),)
-CMAKE_CONFIG_FLAGS += -DCMAKE_BUILD_TYPE:STRING=Debug
+CMAKE_CONFIG_FLAGS += -DCMAKE_BUILD_TYPE:STRING=Debug -DZLIB_BUILD_EXAMPLES:BOOL=OFF
 CMAKE_CONFIG=Debug
 else
 CMAKE_CONFIG=RelWithDebInfo
@@ -55,12 +55,9 @@ install:
 	$(CP) -f $(INSTALL_DIR)/bin/* $(TOP)/bin/$(EPICS_HOST_ARCH)/
 	$(CP) -f $(INSTALL_DIR)/lib/* $(TOP)/lib/$(EPICS_HOST_ARCH)/
 	$(CP) -f $(CMAKE_CONFIG)/*.pdb $(TOP)/bin/$(EPICS_HOST_ARCH)/
+# copy zlibd to zlib so we can use zlib.lib in all epics files
+# correct dll will be loaded at runtime as name embeded in .lib
+ifneq ($(findstring debug,$(EPICS_HOST_ARCH)),)
+	$(CP) -f $(INSTALL_DIR)/lib/zlibd.lib $(TOP)/lib/$(EPICS_HOST_ARCH)/zlib.lib
 endif
-
-#clean::
-#	$(MAKE) -C mysql-connector-c -f Makefile.epics clean T_A=$(T_A) CMAKE_CONFIG=$(CMAKE_CONFIG) PLATFORM=$(PLATFORM) MYSQL_DIR="$(MYSQL_DIR)"
-#	$(MAKE) -C mysql-connector-c++ -f Makefile.epics clean T_A=$(T_A) CMAKE_CONFIG=$(CMAKE_CONFIG) PLATFORM=$(PLATFORM) MYSQL_DIR="$(MYSQL_DIR)"
-#
-#uninstall:
-#	$(RMDIR) $(MYSQL_DIR)
-
+endif
