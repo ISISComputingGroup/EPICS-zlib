@@ -36,3 +36,5 @@ include $(TOP)/configure/RULES
 #----------------------------------------
 #  ADD RULES AFTER THIS LINE
 
+distclean:
+	make -f Makefile.in distclean
