@@ -54,7 +54,7 @@ install:
 	$(CP) -f $(INSTALL_DIR)/include/*.h* $(TOP)/include/
 	$(CP) -f $(INSTALL_DIR)/bin/* $(TOP)/bin/$(EPICS_HOST_ARCH)/
 	$(CP) -f $(INSTALL_DIR)/lib/* $(TOP)/lib/$(EPICS_HOST_ARCH)/
-	$(CP) -f $(CMAKE_CONFIG)/*.pdb $(TOP)/bin/$(EPICS_HOST_ARCH)/
+	$(CP) -f $(CMAKE_CONFIG)/zlib*.pdb $(TOP)/bin/$(EPICS_HOST_ARCH)/
 # copy zlibd to zlib so we can use zlib.lib in all epics files
 # correct dll will be loaded at runtime as name embeded in .lib
 ifneq ($(findstring debug,$(EPICS_HOST_ARCH)),)
